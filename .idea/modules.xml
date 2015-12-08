@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Pjs-Android.iml" filepath="$PROJECT_DIR$/Pjs-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/j2v8-3.1.0/j2v8-3.1.0.iml" filepath="$PROJECT_DIR$/j2v8-3.1.0/j2v8-3.1.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pjs/pjs.iml" filepath="$PROJECT_DIR$/pjs/pjs.iml" />
     </modules>
   </component>
 </project>
