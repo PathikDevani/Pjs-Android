@@ -1,5 +1,7 @@
 package com.v8.builtin;
 
+import android.util.Log;
+
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Object;
 
@@ -11,6 +13,6 @@ public class V8Console extends V8Object {
 	}
 	
 	public void log(Object obj){
-		System.out.println("[PJS]:" +obj);
+		Log.i("My","[PJS]:" +obj);
 	}
 }

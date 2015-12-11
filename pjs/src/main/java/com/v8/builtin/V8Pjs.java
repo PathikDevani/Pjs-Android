@@ -18,6 +18,6 @@ public class V8Pjs extends V8Object{
 	}
 	
 	public void loadPjsFile(String path){
-		V8Utils.loadPJsFile(runtime, new File("./www/"+path),path);
+		V8Utils.loadPJsFile(runtime, "www/"+path,path);
 	}
 }

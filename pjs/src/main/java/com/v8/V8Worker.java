@@ -1,6 +1,7 @@
 package com.v8;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
@@ -16,20 +17,19 @@ public class V8Worker {
 	public static V8 runtime;
 	public static final BlockingQueue<Runnable> QUEUE = Pjs.QUEUE;
 
-	private  Activity activity;
-	public V8Worker(Activity activity) {
-		this.activity = activity;
+	public V8Worker(Context context) {
 
 
-		runtime = V8.createV8Runtime(activity.getApplicationInfo().dataDir);
+		runtime = V8.createV8Runtime(context.getApplicationInfo().dataDir);
 		runtime.add("console", new V8Console(runtime));
 		runtime.add("pjs", new V8Pjs(runtime));
 		
 		
-		runtime.registerJavaMethod(new V8Mysql(),"Mysql");
+		runtime.registerJavaMethod(new V8Mysql(), "Mysql");
+		runtime.executeScript("console.log('hello')");
+
 		
-		
-		V8Utils.executeJsFile(runtime, new File("./configer.js"));
+		V8Utils.executeJsFile(runtime, "config.js");
 	}
 	
 	public static void addWork(Runnable work){

@@ -1,21 +1,25 @@
 package com.v8;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 import com.eclipsesource.v8.Releasable;
 import com.eclipsesource.v8.V8;
+import com.pjs.Pjs;
 
 public class V8Utils {
-	public static String readFile(File file)   {
+	public static String readFile(String file)   {
 		StringBuilder everything = new StringBuilder();
-		
+
 		BufferedReader buffIn = null;
 		try {
-			buffIn = new BufferedReader(new FileReader(file));
+			buffIn = new BufferedReader(new InputStreamReader(Pjs.androidUtils.getFileInputStream(file)));
 			String line;
 			while( (line = buffIn.readLine()) != null) {
 			   everything.append(line+'\n');
@@ -31,28 +35,23 @@ public class V8Utils {
 				}
 			}
 		}
-		
 	    return everything.toString();
 	}
 	
 	
-	public static void executeJsFile(V8 runtime ,File file){
+	public static void executeJsFile(V8 runtime ,String file){
 		runtime.executeScript(readFile(file));
 	}
 	
-	public static void loadPJsFile(V8 runtime ,File file,String key){
-		String pointer = file.lastModified()+":"+file.length();
-		boolean isJsExits = runtime.executeBooleanScript("pjsList._isPjsExists('"+key+"','"+pointer+"')");
-		
+	public static void loadPJsFile(V8 runtime ,String file,String key){
+		boolean isJsExits = runtime.executeBooleanScript("pjsList._isPjsExists('"+key+"')");
 		if(!isJsExits){
-			
-			System.out.println("[JAVA]:" + "load pjs:" + key);
+			Log.i("My","[JAVA]:" + "load pjs:" + key);
 			String js = readFile(file);
-			
-			String str = "pjsList._addPjs(new Pjs('"+key+"','"+pointer+"',function(){"+ js+ "}));";
+
+			String str = "pjsList._addPjs(new Pjs('"+key+"',function(){"+ js+ "}));";
 			runtime.executeVoidScript(str);
 		}
-		
 	}	
 	
 	public static void releasObject(Object obj){
@@ -60,5 +59,10 @@ public class V8Utils {
 			((Releasable) obj).release();
 		}
 	}
+
+
+
+
+
 	
 }
